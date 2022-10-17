@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<gfx-xform version="SINGLE_TS">
+ <input file="/JSG_GAMES/JSGAME_InputTester/UAM/IMG/tiles.png" type="png" tile-width="8" tile-height="8" />
+ <output file="UAM/JSON/tilesBG1.json">
+ <tiles var-name="tilesBG1" tilesetOutputTo="PROGMEM" removeDupeTiles="1" outputAsJson="1" translucent_color="253" />
+ <maps pointers-size="8">
+  <map var-name="transparent_tile" left="0" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="separator_tile1" left="2" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="separator_tile2" left="3" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="separator_tile3" left="4" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="separator_tile4" left="4" top="1" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="separator_tile5" left="5" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+  <map var-name="snesGamepad" left="1" top="3" width="17" height="8" mapOutputTo="PROGMEM" /> 
+  <map var-name="snesGamepad2" left="21" top="3" width="17" height="8" mapOutputTo="PROGMEM" /> 
+  <map var-name="buttonActive" left="1" top="0" width="1" height="1" mapOutputTo="PROGMEM" /> 
+ </maps> 
+ </output> 
+</gfx-xform> 

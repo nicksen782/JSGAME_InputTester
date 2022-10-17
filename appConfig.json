@@ -1,0 +1,64 @@
+{
+    "meta":{
+        "debug": false,
+        "autoSwitchToLobbyDebugTab": false,
+        "defaultLobbyTab": "lobby",
+        "hideLobby": true, 
+        "defaultGameCanvasHeightPercent": 90,
+        "dimensions":{
+            "pointersSize" : 8,
+            "tileWidth" : 8,
+            "tileHeight": 8,
+            "rows":42, 
+            "cols":42
+        }, 
+        "DOM": {
+            "gameDiv"             : "jsgame_app",
+            "lobbyDiv"            : "jsgame_lobby",
+            "gameContDiv"         : "InputTester_app",
+            "app_game"            : "InputTester_app_game",
+            "preload_canvas"      : "InputTester_app_game_preload"
+        },
+        "tilesets":[
+            "tilesBG1",
+            "tilesTX1"
+        ],
+        "layers":[
+            { "name": "BG1" , "canvasOptions": { "alpha": true }, "bg_color":"#111" },
+            { "name": "SP1" , "canvasOptions": { "alpha": true }, "bg_color":"" },
+            { "name": "TEXT", "canvasOptions": { "alpha": true }, "bg_color":"" }
+        ],
+        
+        "jsgame_shared_plugins":[
+            { "f":"shared/plugins/VIDEO_A/videoModeA_core.js"    , "t": "js", "n":"videoModeA_core"     },
+            { "f":"shared/plugins/VIDEO_A/videoModeA_user.js"    , "t": "js", "n":"videoModeA_user"     },
+            { "f":"shared/plugins/INPUT_A/inputModeA_core.js"    , "t": "js", "n":"inputModeA_core"     },
+            { "f":"shared/plugins/INPUT_A/inputModeA_user.js"    , "t": "js", "n":"inputModeA_user"     },
+            { "f":"shared/plugins/INPUT_A/inputModeA_mappings.js", "t": "js", "n":"inputModeA_mappings" }
+        ],
+        "jsgame_shared_plugins_config":{
+            "videoModeA": {
+                "useFade":true,
+                "useOffscreenCanvas":true
+            },
+            "inputModeA": {
+                "includeJsgConfig":true,
+                "useKeyboard":true,
+                "useGamepads":true
+            }
+        }
+    },
+
+    "files":[
+        { "f":"inputTester.js"                 , "t":"js"   , "n":"inputTester"           },
+        { "f":"inputTester.css"                , "t":"css"  , "n":"inputTester_css"       },
+        { "f":"inputTester.html"               , "t":"html" , "n":"inputTester_html"      },
+        { "f":"inputTester_main.js"            , "t":"js"   , "n":"inputTester_main"      },
+        { "f":"inputTester_SHARED.js"          , "t":"js"   , "n":"inputTester_SHARED" },
+        { "f":"gamestates/InputTester_gs_title0.js" , "t":"js"   , "n":"inputTester_gs_title0" },
+        { "f":"gamestates/InputTester_gs_tester.js" , "t":"js"   , "n":"inputTester_gs_tester" },
+        { "f":"UAM/JSON/tilesBG1.json"         , "t":"json" , "n":"tilesBG1"         },
+        { "f":"UAM/JSON/tilesTX1.json"         , "t":"json" , "n":"tilesTX1"         }
+    ]
+}
+
