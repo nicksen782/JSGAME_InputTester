@@ -163,7 +163,7 @@ _APP = {
     // Process init tasks (Ex: sound) that can only be done after a user-gesture.
     postInit: function(){
         return new Promise( async (resolve,reject)=>{
-            await this.game.acceptNewInput( await _INPUT.util.getStatesForPlayers() );
+            await _INPUT.util.getStatesForPlayers();
             resolve();
         });
     },

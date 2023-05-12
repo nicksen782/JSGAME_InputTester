@@ -41,31 +41,6 @@ _APP.game = {
     // KEYS THAT ARE POPULATED WITHIN THIS FILE. 
     gameLoop: {}, 
     tests   : {},  
-    input   : {
-        "obj": {},
-        "raw": {},
-    }, 
-
-    acceptNewInput: async function(data){
-        // Expecting two players worth of data.
-
-        let keys = Object.keys(data);
-        for(let k=0, l=keys.length; k<l; k+=1){
-            let pkey = keys[k];
-            try{
-                this.input.obj[pkey] = {
-                    "_prev"  : _INPUT.util.stateByteToObj( data[pkey]._prev   ),
-                    "held"   : _INPUT.util.stateByteToObj( data[pkey].held    ),
-                    "press"  : _INPUT.util.stateByteToObj( data[pkey].press   ),
-                    "release": _INPUT.util.stateByteToObj( data[pkey].release ),
-                };
-                this.input.raw[pkey] = data[pkey];
-            }
-            catch(e){
-                console.log(e);
-            }
-        }
-    },
 };
 
 // Handle user inputs.
@@ -75,7 +50,8 @@ _APP.game = {
 _APP.game.gameLoop = {
     parent: null,
 
-    frameCounter : 0,
+    frameCounter     : 0,
+    frameDrawCounter : 0,
     raf_id       : null,
     running      : false,
     fps          : 60,
@@ -239,15 +215,26 @@ _APP.game.gameLoop = {
                 this.frameCounter += 1;
 
                 // FADE
+                // Function processFading will determine when the fade level needs to change.
+                // If processFading returns true then the LOGIC and INPUT should be skipped.
                 _JSG.shared.timeIt.stamp("do_fade", "s", "gameLoop");
-                if(await _GFX.fade.blocking.doFade() ){
-                    _JSG.shared.timeIt.stamp("do_fade", "e", "gameLoop");
+                this.fadeIsBlocking = await _GFX.fade.processFading();
+                if( this.fadeIsBlocking ){
+                    _JSG.shared.timeIt.stamp("do_draw", "s", "gameLoop"); 
+                    
+                    // Count this as a draw frame if fade frame will be drawn.
+                    if(_GFX.fade.framesSinceLastFadeChange == _GFX.fade.framesBetweenFadeChanges){ this.frameDrawCounter += 1; }
 
+                    // Draw (the fade level.)
+                    await _GFX.VRAM.draw(); 
+                    _JSG.shared.timeIt.stamp("do_draw", "e", "gameLoop"); 
+                    
+                    _JSG.shared.timeIt.stamp("do_fade", "e", "gameLoop");
                     _JSG.shared.timeIt.stamp("full_gameLoop", "e", "gameLoop"); 
 
                     // Run the end of loop tasks and schedule the next loop. 
                     this.endOfLoopTasks();
-                    return; 
+                    return;
                 }
                 else{
                     _JSG.shared.timeIt.stamp("do_fade", "e", "gameLoop");
@@ -255,7 +242,7 @@ _APP.game.gameLoop = {
 
                 // INPUT
                 _JSG.shared.timeIt.stamp("get_input", "s", "gameLoop"); 
-                await this.parent.acceptNewInput( await _INPUT.util.getStatesForPlayers() );
+                await _INPUT.util.getStatesForPlayers();
                 _JSG.shared.timeIt.stamp("get_input", "e", "gameLoop"); 
                 //
                 

@@ -30,19 +30,18 @@
         ],
         
         "jsgame_shared_plugins":[
-            { "f":"shared/plugins/VIDEO_A/videoModeA_core.js"    , "t": "js", "n":"videoModeA_core"     },
-            { "f":"shared/plugins/VIDEO_A/videoModeA_user.js"    , "t": "js", "n":"videoModeA_user"     },
-            { "f":"shared/plugins/INPUT_A/inputModeA_core.js"    , "t": "js", "n":"inputModeA_core"     },
-            { "f":"shared/plugins/INPUT_A/inputModeA_user.js"    , "t": "js", "n":"inputModeA_user"     },
-            { "f":"shared/plugins/INPUT_A/inputModeA_mappings.js", "t": "js", "n":"inputModeA_mappings" }
+            { "f":"shared/plugins/VIDEO_A/videoModeA_core.js", "t": "js", "n":"videoModeA_core" },
+            { "f":"shared/plugins/INPUT_A/inputModeA_core.js", "t": "js", "n":"inputModeA_core" }
         ],
         "jsgame_shared_plugins_config":{
             "videoModeA": {
-                "useFade":true,
-                "useOffscreenCanvas":true
+                "fadeCreateAtStart": false,
+                "debug":{
+                    "generateAndReturnFadedTiles": false,
+                    "recordPrevChanges"          : true
+                }
             },
             "inputModeA": {
-                "includeJsgConfig":true,
                 "useKeyboard":true,
                 "useGamepads":true
             }
