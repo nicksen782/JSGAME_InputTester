@@ -53,17 +53,18 @@
             // Used for display.
             appNameText: "JSGAME: Input Tester", 
 
+            useSharedPluginLoader: "GAME",
             files:[
                 // { f:"GAME/game.css"      , t:"css" },
-                { "f":"inputTester_main.js"                , "t":"js", "n":"inputTester_main"      },
-                { "f":"inputTester_SHARED.js"              , "t":"js", "n":"inputTester_SHARED"    },
-                { "f":"gamestates/InputTester_gs_title0.js", "t":"js", "n":"inputTester_gs_title0" },
-                { "f":"gamestates/InputTester_gs_tester.js", "t":"js", "n":"inputTester_gs_tester" },
-                { "f":"inputTester_init.js"                , "t":"js", "n":"inputTester_init"    },
+                { "f":"inputTester_main.js"                , "t":"js", "n":"inputTester_main"     , syncType: "sync" },
+                { "f":"inputTester_SHARED.js"              , "t":"js", "n":"inputTester_SHARED"   , syncType: "async" },
+                { "f":"gamestates/InputTester_gs_title0.js", "t":"js", "n":"inputTester_gs_title0", syncType: "async" },
+                { "f":"gamestates/InputTester_gs_tester.js", "t":"js", "n":"inputTester_gs_tester", syncType: "async" },
+                { "f":"inputTester_init.js"                , "t":"js", "n":"inputTester_init"     , syncType: "async" },
             ],
             debugFiles:[
-                // { f:"GAME/debug.js" , t:"js"  },
-                // { f:"GAME/debug.css", t:"css" },
+                // { f:"GAME/debug.js" , t:"js", syncType: "async" },
+                // { f:"GAME/debug.css", t:"css, syncType: "async" },
             ],
     
             // First gamestate1.
@@ -79,18 +80,12 @@
             enabled: true,
             debug  : false,
     
-            files:[
-                { f:"/SHARED/VIDEO_A/videoModeA.css"     , t:"css" },
-                { f:"/SHARED/VIDEO_A/videoModeA_core.js" , t:"js" },
-                { f:"/SHARED/VIDEO_A/videoModeA_user.js" , t:"js" },
-            ],
-            debugFiles:[
-                // { f:"/SHARED/VIDEO_A/videoModeA_debug.js"  , t:"js"  },
-            ],
-            debugFiles2:[
-                // { f:"/SHARED/VIDEO_A/debug.html", t:"html", destId: "navView_gfx_debug" },
-            ],
-            webWorker: "/SHARED/VIDEO_A/videoModeA_webworker.js",
+            useSharedPluginLoader: "VIDEO_A",
+            files      : _APP.sharedPlugins.VIDEO_A.files,
+            files2     : _APP.sharedPlugins.VIDEO_A.files2,
+            debugFiles : _APP.sharedPlugins.VIDEO_A.debugFiles,
+            debugFiles2: _APP.sharedPlugins.VIDEO_A.debugFiles2,
+            webWorker  : _APP.sharedPlugins.VIDEO_A.webWorker,
 
             // Shared dimensions for each layer.
             "dimensions":{
@@ -149,24 +144,13 @@
             enabled: true,
             debug  : false,
     
-            files:[
-                { f: "/SHARED/INPUT_A/inputModeA_core.js"      , t:"js"  },
-                { f: "/SHARED/INPUT_A/inputModeA_user.js"      , t:"js"  },
-                { f: "/SHARED/INPUT_A/inputModeA_mappings.js"  , t:"js"  },
-                { f: "/SHARED/INPUT_A/inputModeA_web.js"       , t:"js"  },
-                { f: "/SHARED/INPUT_A/inputModeA_web.css"      , t:"css" },
-                { f: "/SHARED/INPUT_A/inputModeA_customized.js", t:"js"  },
-            ],
-            files2: [
-                { f: "/SHARED/INPUT_A/inputModeA_web.html"     , t:"html", type:"webConfig" },
-            ],
-            debugFiles:[
-                // { f: "INPUT_A/debug.js" , t:"js"  },
-                // { f: "INPUT_A/debug.css", t:"css" },
-            ],
-            debugFiles2:[
-            ],
-    
+            useSharedPluginLoader: "INPUT_A",
+            files      : _APP.sharedPlugins.INPUT_A.files,
+            files2     : _APP.sharedPlugins.INPUT_A.files2,
+            debugFiles : _APP.sharedPlugins.INPUT_A.debugFiles,
+            debugFiles2: _APP.sharedPlugins.INPUT_A.debugFiles2,
+            webWorker  : _APP.sharedPlugins.INPUT_A.webWorker,
+
             useKeyboard   : true, 
             useGamepads   : true,
             listeningElems: ["gameView", "navView_input"],
@@ -187,17 +171,12 @@
             enabled: false,
             debug  : false,
     
-            files:[
-                // { f:"/SHARED//SOUND_B/soundModeB_core.js", t:"js"  },
-                // { f:"/SHARED//SOUND_B/soundModeB_user.js", t:"js"  },
-                // { f:"/SHARED//SOUND_B/soundModeB.css", t:"css"  },
-            ],
-            debugFiles:[
-                // { f:"/SHARED//SOUND_B/debug.js" , t:"js"  },
-                // { f:"/SHARED//SOUND_B/debug.css", t:"css" },
-            ],
-            debugFiles2:[
-            ],
+            useSharedPluginLoader: "SOUND_B",
+            files      : _APP.sharedPlugins.SOUND_B.files,
+            files2     : _APP.sharedPlugins.SOUND_B.files2,
+            debugFiles : _APP.sharedPlugins.SOUND_B.debugFiles,
+            debugFiles2: _APP.sharedPlugins.SOUND_B.debugFiles2,
+            webWorker  : _APP.sharedPlugins.SOUND_B.webWorker,
     
             interActionNeededId      : "audio_userInputNeeded_container",
             blockLoopIfSoundNotLoaded: false,
@@ -211,5 +190,12 @@
 
         // List of config keys.
         configKeys: ["gfxConfig", "inputConfig", "soundConfig", "gameConfig"],
+    };
+
+
+    // Custom game file loader.
+    _APP.sharedPlugins.GAME.fileLoadFunc =  async function(){
+        // console.log("CUSTOM");
+        await _APP.sharedPlugins.__util.fileLoadFunc1(_APP.configObj["gameConfig"], _APP.configObj["gameConfig"]);
     };
 })();
